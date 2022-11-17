@@ -123,6 +123,146 @@ SLL* delPosition(SLL *head, int pos)
     return head;
 }
 
+SLL *delElement(SLL *head, int ele)
+{
+    if (!head)
+    {
+        printf("List is empty!\n");
+        return head;
+    }
+    SLL *p = head, *c;
+    if (head -> val == ele)
+    {
+        head = head -> next;
+        free(p);
+        return head;
+    }
+    while (p -> next)
+    {
+        if (p->next->val == ele)
+        {
+            c = p -> next;
+            p -> next = c -> next;
+            free(c);
+            return head;
+        }
+        p = p -> next;
+    }
+    printf("Element is not found in the list!\n");
+    return head;
+}
+
+SLL* mergeSortedLists(SLL *h1, SLL *h2)
+{
+    if (!h1)
+        return h2;
+    else if (!h2)
+        return h1;
+
+    SLL *h3 = NULL, *tail, *node;
+
+    while (h1 || h2)
+    {
+        if (!h1 && h2)
+        {
+            node = h2;
+            h2 = h2 -> next;
+        }
+        else if (h1 && !h2)
+        {
+            node = h1;
+            h1 = h1 -> next;
+        }
+        else if (h1 -> val < h2 -> val)
+        {
+            node = createNode(h1 -> val);
+            h1 = h1 -> next;
+        }
+        else
+        {
+            node = createNode(h2 -> val);
+            h2 = h2 -> next;
+        }
+
+        if (!h3)
+        {
+            h3 = node;
+        }
+        else
+        {
+            tail -> next = node;
+        }
+        tail = node;
+    }
+    return h3;
+}
+
+SLL* delDuplicatesInSorted(SLL* head)
+{
+    if (!head)
+    {
+        printf("List is empty!\n");
+        return head;
+    }
+    SLL *p = head, *c;
+    while (p -> next)
+    {
+        if (p -> val == p->next->val)
+        {
+            c = p -> next;
+            p -> next = c -> next;
+            free(c);
+        }
+        else
+            p = p -> next;
+    }
+    return head;
+}
+
+SLL* delDuplicates(SLL *head)
+{
+    if (!head)
+    {
+        printf("List is empty!\n");
+        return head;
+    }
+
+    SLL *p = head, *c, *t;
+
+    while (p -> next)
+    {
+        c = p;
+        while (c -> next)
+        {
+            if (p -> val == c -> next -> val)
+            {
+                t = c -> next;
+                c -> next = t -> next;
+                free(t);
+            }
+            else
+                c = c -> next;
+        }
+        p = p -> next;
+    }
+    return head;
+}
+
+SLL* delFromEnd(SLL *head, int pos)
+{
+    int l = listSize(head);
+    return delPosition(head, l - pos + 1);
+}
+
+int findMiddle(SLL *head)
+{
+    int l = listSize(head) / 2;
+    for (int i = 1; i <= l; ++i)
+    {
+        head = head -> next;
+    }
+    return head -> val;
+}
 
 void printList(SLL *head)
 {
@@ -167,11 +307,36 @@ int main()
     node = createNode(v);
     head = insertInSortedList(head, node);
     printList(head);
-    */
 
     printf("Enter position to delete: ");
     scanf("%d", &n);
     head = delPosition(head, n);
     printList(head);
+
+    printf("Enter element to delete: ");
+    scanf("%d", &v);
+    head = delElement(head, v);
+    printList(head);
+    
+    printf("Enter number of elements of second list: ");
+    scanf("%d", &v);
+    SLL *head2 = createList(v);
+    printList(head2);
+
+    printf("After merging the two lists: ");
+    SLL *head3 = mergeSortedLists(head, head2);
+    printList(head3);
+
+    printf("After deleting the duplicates: ");
+    head = delDuplicates(head);
+    printList(head);
+    
+    printf("Enter a position from end to delete: ");
+    scanf("%d", &n);
+    head = delFromEnd(head, n);
+    printList(head);
+    */
+    v = findMiddle(head);
+    printf("The middle element of the list: %d\n", v);
     return 0;
 }
