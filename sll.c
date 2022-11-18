@@ -1,118 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct sll
+typedef struct SLL
 {
-    int val;
-    struct sll *next;
-}sll;
+    int data;
+    struct SLL *next;
+}
+SLL;
 
-sll* createNode(int v)
+SLL* createNode(int v)
 {
-    sll *node = (sll*)malloc(sizeof(sll));
-    node -> val = v;
-    node ->next = NULL;
-    return node;
+    SLL *node = (SLL*)malloc(sizeof(SLL));
+    node -> data = v;
+    node -> next = NULL;
 }
 
-sll* createList(int n)
+SLL* createList(int n)
 {
     int v;
-    sll *head = NULL, *tail = NULL, *newN;
-    printf("Enter the elements of list:\n");
-    for (int i = 0; i < n; ++i)
+    SLL *head = NULL, *tail, *newNode;
+    printf("Enter the elements of the list: \n");
+
+    for (int i = 1; i <= n; ++i)
     {
         scanf("%d", &v);
-        newN = createNode(v);
+        newNode = createNode(v);
         if (head == NULL)
         {
-            head = newN;
+            head = newNode;
         }
         else
         {
-            tail -> next = newN;
+            tail -> next = newNode;
         }
-        tail = newN;
+        tail = newNode;
     }
     return head;
 }
 
-sll* addAtHead(sll *head, int v)
-{
-    sll *node = (sll*)malloc(sizeof(sll));
-    node -> val = v;
-    node -> next = head;
-    return node;
-}
-
-void addAtTail(sll *head, int v)
-{
-    while (head->next != NULL)
-    {
-        head = head->next;
-    }
-    sll *node = (sll*)malloc(sizeof(sll));
-    node -> val = v;
-    node -> next = NULL;
-    head->next = node;
-}
-
-void insertNode(sll *head, int n, int v)
-{   
-    int s = 1;
-    while (head)
-    {
-        if (s == n - 1)
-        {
-            sll *node = (sll*)malloc(sizeof(sll));
-            node -> val = v;
-            node -> next = head->next;
-            head -> next = node;
-            break;
-        }
-        else{
-            head = head->next;
-            s++;
-        }
-    }
-}
-
-void printList(sll *head)
+void printList(SLL *head)
 {
     while (head)
     {
-        printf("%d -> ", head->val);
-        head = head->next;
+        printf("%d -> ", head -> data);
+        head = head -> next;
     }
     printf("END\n");
 }
 
 int main(int argc, char const *argv[])
 {
-
-    //creating and printing a linked list
-    printf("Enter number of list elements: ");
     int n;
+    printf("Enter the no. of elements of the list: ");
     scanf("%d", &n);
-    sll *head = createList(n);
-    printList(head);
 
-    //adding a node at the head
-    printf("Enter the value to add at the head: ");
-    int v;
-    scanf("%d", &v);
-    head = addAtHead(head, v);
-    printList(head);
+    SLL *head = createList(n);
 
-    //adding a node at the tail
-    printf("Enter the value to add at the tail: ");
-    scanf("%d", &v);
-    addAtTail(head, v);
     printList(head);
-
-    //inserting a node in between the list at a given position
-    printf("Enter position and value to insert in the list: ");
-    scanf("%d %d", &n, &v);
-    insertNode(head, n, v);
-    printList(head);
+    return 0;
 }

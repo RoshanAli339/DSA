@@ -264,6 +264,27 @@ int findMiddle(SLL *head)
     return head -> val;
 }
 
+SLL* selectionSort(SLL *head)
+{
+    SLL *p = head, *c, *least;
+    while (p -> next)
+    {
+        least = p;
+        c = p -> next;
+        while (c)
+        {
+            if (c -> val < least -> val)
+                least = c;
+            c = c -> next;
+        }
+        int temp = least -> val;
+        least -> val = p -> val;
+        p -> val = temp;
+        p = p -> next;
+    }
+    return head;
+}
+
 void printList(SLL *head)
 {
     while (head)
@@ -335,8 +356,12 @@ int main()
     scanf("%d", &n);
     head = delFromEnd(head, n);
     printList(head);
-    */
+
     v = findMiddle(head);
     printf("The middle element of the list: %d\n", v);
+    */
+    printf("After sorting the list is: ");
+    head = selectionSort(head);
+    printList(head);
     return 0;
 }
