@@ -181,6 +181,29 @@ Term* multiplyPoly(Term *p1, Term *p2)
     return head;
 }
 
+Term* multiplyPoly2(Term *p1, Term *p2)
+{
+    Term *head = NULL, *tail = NULL, *term, *t, *a = NULL;
+    while (p1)
+    {
+        head = tail = NULL;
+        t = p2;
+        while (t)
+        {
+            term = createTerm(p1 -> coeff * t -> coeff, p1 -> exp + t -> exp);
+            if (!head)
+                head = term;
+            else
+                tail -> next = term;
+            tail = term;
+            t = t -> next;
+        }
+        a = addPoly(a, head);
+        p1 = p1 -> next;
+    }
+    return a;
+}
+
 int main(int argc, char const *argv[])
 {
     int n1, n2;
@@ -200,7 +223,7 @@ int main(int argc, char const *argv[])
     printf("=\n");
     printPoly(head3);
 
-    head3 = multiplyPoly(head1, head2);
+    head3 = multiplyPoly2(head1, head2);
     printPoly(head1);
     printf("*\n");
     printPoly(head2);
