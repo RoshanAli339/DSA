@@ -9,5 +9,6 @@ typedef struct CLL
 
 int main()
 {
-
+    CLL a = {5, NULL};
+    printf("%d\n", a.val);
 }
