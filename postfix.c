@@ -37,45 +37,44 @@ char* convPostfix(char infix[])
     int a[100];
     a[1] = -1;
     a['^'] = 3;
+    a['%'] = 2;
     a['/'] = 2;
     a['*'] = 2;
     a['+'] = 1;
     a['-'] = 1;
     a['('] = 0;
+    int index = -1;
     char *postfix = (char*)malloc(strlen(infix)*sizeof(char));
     for (int i = 0; infix[i] != '\0'; ++i)
     {
         if (infix[i] >= 97 && infix[i] <= 122)
-            postfix = strncat(postfix, (infix+i), 1);
+            postfix[++index] = infix[i];
         else
         {
-            if (top != -1 && infix[i] == ')')
+            if (infix[i] == ')')
             {
                 while (peek() != '(')
                 {
-                    char r = pop();
-                    postfix = strncat(postfix, &r, 1);
+                    postfix[++index] = pop();
                 }
                 pop();
             }
             else
             {
-                while (infix[i]!='(' && a[infix[i]] <= a[peek()])
+                while (infix[i] != '(' && a[infix[i]] <= a[peek()])
                 {
-                    char r = pop();
-                    postfix = strncat(postfix, &r, 1);
+                    postfix[++index] = pop();
                 }
                 push(infix[i]);
             }
         }
+        //printf("%c : %s : %s\n", infix[i], postfix, stk);
     }
     if (top != -1)
     {
-        char c;
         while (top >= 0)
         {
-            c = pop();
-            postfix = strncat(postfix, &c, 1);
+            postfix[++index] = pop();
         }
     }
     return postfix;
