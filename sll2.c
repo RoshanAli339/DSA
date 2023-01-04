@@ -24,6 +24,7 @@ SLL* createList(int n)
 
     for (int i = 0; i < n; i++)
     {
+        printf("Enter the value: ");
         scanf("%d", &v);
         newN = createNode(v);
         if (head == NULL)
