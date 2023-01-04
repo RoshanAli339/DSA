@@ -310,13 +310,12 @@ int main()
     node = createNode(v);
     head = insertAtStart(head, node);
     printList(head);
-
+    
     printf("Enter the value to add at the end: ");
     scanf("%d", &v);
     node = createNode(v);
     head = insertAtEnd(head, node);
     printList(head);    
-
 
     printf("Enter the element and position to insert a new element: ");
     scanf("%d %d", &v, &n);
@@ -348,11 +347,13 @@ int main()
     printf("After merging the two lists: ");
     SLL *head3 = mergeSortedLists(head, head2);
     printList(head3);
+    */
 
     printf("After deleting the duplicates: ");
     head = delDuplicates(head);
     printList(head);
-    
+
+    /*    
     printf("Enter a position from end to delete: ");
     scanf("%d", &n);
     head = delFromEnd(head, n);
@@ -360,9 +361,10 @@ int main()
 
     v = findMiddle(head);
     printf("The middle element of the list: %d\n", v);
-    */
+    
     printf("After sorting the list is: ");
     head = selectionSort(head);
     printList(head);
+    */
     return 0;
 }
